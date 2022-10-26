@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Login {
     public partial class Form2 : Form {
@@ -61,8 +62,19 @@ namespace Login {
                 balls[i].move(); // 移動球
                 sum_spd += balls[i].spd;
             }
+            if (sum_spd <= 0.001) {  //  所有球 都停了
+                timer1.Stop();		//  停止 計時器
+                panel1.Refresh();
+            }
         }
         ball[] balls = new ball[10];    // 10 顆球的陣列    宣告，new 
+        private void Hit_button_Click(object sender, EventArgs e) {
+            // 每次擊球，重新初始化打擊力，摩擦力
+            balls[0].spd = vScrollBar1.Maximum - vScrollBar1.Value; // 母球 加 速度
+            fr= (vScrollBar2.Maximum - vScrollBar2.Value) / 50.0;  // 摩擦力
+            timer1.Enabled = true;  // 開始定時 呼叫timer1_Tick
+        }
+
         public Form2() {
             InitializeComponent();
             g = panel1.CreateGraphics();     //繪圖裝置 初始化
@@ -80,6 +92,7 @@ namespace Login {
                 balls[i].draw();     //每個球 畫自己
 
             balls[0].drawStick();     //  ex4：畫指向 0號球(母球) 的球桿
+            if (balls[0].spd < 0.0001) balls[0].drawStick();     //  ex5：0號球停止時 才畫指向 0號球(母球) 的球桿
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -96,6 +109,16 @@ namespace Login {
             balls[0].setAng(a); // 存入母球 行進角度
             panel1.Refresh(); // 重新繪畫轉動過的球桿
             g.DrawRectangle(Pens.HotPink, e.X - 2, e.Y - 2, 4, 4); // 點擊點 畫小方塊
+        }
+
+        private void vScrollBar2_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void Form2_Load(object sender, EventArgs e) {
