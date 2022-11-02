@@ -32,12 +32,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.vScrollBar2 = new System.Windows.Forms.VScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,26 @@
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown_1);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label3.Location = new System.Drawing.Point(1008, 482);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 30);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "摩擦力";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Location = new System.Drawing.Point(868, 482);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 30);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "打擊力";
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(881, 40);
@@ -115,26 +135,6 @@
             // 
             this.timer1.Interval = 30;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(868, 482);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 30);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "打擊力";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(1008, 482);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 30);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "摩擦力";
             // 
             // Form2
             // 

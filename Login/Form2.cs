@@ -11,11 +11,41 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Login {
     public partial class Form2 : Form {
+        BufferedGraphicsContext currentContext;
+        BufferedGraphics gBuffer;
         static double fr = 0; // 摩擦力
         static Graphics g; //繪圖裝置（一個就夠了）
         static int r = 10, r2 = 20;    //半徑，直徑
+        static int width = 0, height = 0;  //球桌  寬，高
 
         class ball { //球 class(類別)
+            public void rebound()
+            {  //球碰邊反彈，或進洞
+                if (x < r || x > width - r)
+                {  //出左右邊
+                    setAng(Math.PI - ang);
+                    if (x < r)
+                    {
+                        x = r;    // 拉回桌 內
+                    }
+                    else
+                    {
+                        x = width - r;
+                    }
+                }
+                else if (y < r || y > height - r)
+                { //出上下邊
+                    setAng(-ang);
+                    if (y < r)
+                    {
+                        y = r;    //拉回桌 內
+                    }
+                    else
+                    {
+                        y = height - r;
+                    }
+                }
+            }
             public double spd = 0; // 球 行進速度
             public void move() { // 移動球
                 if (spd > 0) { // 速度>0才移動
@@ -60,6 +90,7 @@ namespace Login {
             panel1.Refresh(); // 呼叫panel1_Paint事件處理副程式
             for(int i = 0 ; i < 10 ; i++) {
                 balls[i].move(); // 移動球
+                balls[i].rebound();
                 sum_spd += balls[i].spd;
             }
             if (sum_spd <= 0.001) {  //  所有球 都停了
@@ -68,12 +99,6 @@ namespace Login {
             }
         }
         ball[] balls = new ball[10];    // 10 顆球的陣列    宣告，new 
-        private void Hit_button_Click(object sender, EventArgs e) {
-            // 每次擊球，重新初始化打擊力，摩擦力
-            balls[0].spd = vScrollBar1.Maximum - vScrollBar1.Value; // 母球 加 速度
-            fr= (vScrollBar2.Maximum - vScrollBar2.Value) / 50.0;  // 摩擦力
-            timer1.Enabled = true;  // 開始定時 呼叫timer1_Tick
-        }
 
         public Form2() {
             InitializeComponent();
@@ -84,6 +109,8 @@ namespace Login {
             // 0號球(母球)， 白色，放右邊中間
             balls[0] = new ball(400, 140, Color.FromArgb(255, 255, 255, 255), 0);
             balls[0].setAng(Math.PI / 4);
+            width = panel1.Width;
+            height = panel1.Height;
         }
 
 
@@ -91,8 +118,9 @@ namespace Login {
             for (int i = 0; i < 10; i++)     //10 顆球
                 balls[i].draw();     //每個球 畫自己
 
-            balls[0].drawStick();     //  ex4：畫指向 0號球(母球) 的球桿
-            if (balls[0].spd < 0.0001) balls[0].drawStick();     //  ex5：0號球停止時 才畫指向 0號球(母球) 的球桿
+            if (balls[0].spd < 0.0001) {
+                balls[0].drawStick();     //  ex5：0號球停止時 才畫指向 0號球(母球) 的球桿
+            }
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -118,7 +146,10 @@ namespace Login {
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            // 每次擊球，重新初始化打擊力，摩擦力
+            balls[0].spd = vScrollBar1.Maximum - vScrollBar1.Value; // 母球 加 速度
+            fr = (vScrollBar2.Maximum - vScrollBar2.Value) / 50.0;  // 摩擦力
+            timer1.Enabled = true;  // 開始定時 呼叫timer1_Tick
         }
 
         private void Form2_Load(object sender, EventArgs e) {
